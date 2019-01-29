@@ -11,10 +11,13 @@ function addOrSet(obj: Object, disp: Disposer) {
   }
 }
 
+
+// call with mobx autorun or equivalent (that returns callable)
 export function ldisposer(obj: Object, disp: Disposer) {
   addOrSet(obj, disp);
 }
 
+// call on ngOndestroy: lstop(this)
 export function lstop(obj: Object) {
   const ds = _disposers.get(obj);
   if (!ds) {
@@ -28,6 +31,7 @@ export function lstop(obj: Object) {
   _disposers.delete(obj);
 }
 
+// use with rxjs subscription: lunsub(this, obs.subscribe(...))
 export function lunsub<T extends { unsubscribe: () => void }>(
   obj: Object,
   obs: T
